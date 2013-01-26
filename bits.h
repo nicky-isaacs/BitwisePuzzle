@@ -1,0 +1,27 @@
+
+int isZero(int);
+int test_isZero(int);
+int tmax();
+int test_tmax();
+int fitsBits(int, int);
+int test_fitsBits(int, int);
+int negate(int);
+int test_negate(int);
+int addOK(int, int);
+int test_addOK(int, int);
+int reverseBytes(int);
+int test_reverseBytes(int);
+int logicalShift(int, int);
+int test_logicalShift(int, int);
+int conditional(int, int, int);
+int test_conditional(int, int, int);
+int sm2tc(int);
+int test_sm2tc(int);
+int bitParity(int);
+int test_bitParity(int);
+int isPower2(int);
+int test_isPower2(int);
+int bang(int);
+int test_bang(int);
+int classLog2(int);
+int test_classLog2(int);
