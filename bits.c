@@ -125,15 +125,15 @@ NOTES:
 
 /*
  * STEP 3: Modify the following functions according the coding rules.
- * 
+ *
  *   IMPORTANT. TO AVOID GRADING SURPRISES:
  *   1. Use the dlc compiler to check that your solutions conform
  *      to the coding rules.
- *   2. Use the btest test harness to check that your solutions produce 
+ *   2. Use the btest test harness to check that your solutions produce
  *      the correct answers. Watch out for corner cases around Tmin and Tmax.
  */
 /*
- * isZero - returns 1 if x == 0, and 0 otherwise 
+ * isZero - returns 1 if x == 0, and 0 otherwise
  *   Examples: isZero(5) = 0, isZero(0) = 1
  *   Legal ops: ! ~ & ^ | + << >>
  *   Max ops: 2
