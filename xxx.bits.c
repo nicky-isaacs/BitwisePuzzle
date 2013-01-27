@@ -1,6 +1,6 @@
-/*
- * CS:APP Data Lab
- *
+/* 
+ * CS:APP Data Lab 
+ * 
  * bits.c - Source file with your solutions to the Lab.
  *          This is the file you will hand in to your instructor.
  *
@@ -8,7 +8,7 @@
  * compiler. You can still use printf for debugging without including
  * <stdio.h>, although you might get a compiler warning. In general,
  * it's not good practice to ignore compiler warnings, but in this
- * case it's OK.
+ * case it's OK.  
  */
 
 #include "btest.h"
@@ -25,17 +25,17 @@ team_struct team =
       Your login ID if working as a one person team
       or, ID1+ID2 where ID1 is the login ID of the first team member
       and ID2 is the login ID of the second team member */
-    "maci4699",
+    "nisaacs", 
    /* Student name 1: Replace with the full name of first team member */
-   "Matthew Cirbo",
+   "Nick Isaacs",
    /* Login ID 1: Replace with the login ID of first team member */
-   "maci4699",
+   "nisaacs",
 
    /* The following should only be changed if there are two team members */
    /* Student name 2: Full name of the second team member */
-   "Nick Isaacs",
+   "",
    /* Login ID 2: Login ID of the second team member */
-   "nisaacs"
+   ""
 };
 
 #if 0
@@ -70,7 +70,7 @@ CODING RULES:
   2. Function arguments and local variables (no global variables).
   3. Unary integer operations ! ~
   4. Binary integer operations & ^ | + << >>
-
+    
   Some of the problems restrict the set of allowed operators even further.
   Each "Expr" may consist of multiple operators. You are not restricted to
   one operator per line.
@@ -140,22 +140,27 @@ NOTES:
  *   Rating: 1
  */
 int isZero(int x) {
-
-  return !x;
+  x |= x >> 16
+  x |= x >> 8
+  x |= x >> 4
+  x |= x >> 2
+  x |= x >> 1
+  return x&1
 }
-/*
- * TMax - return maximum two's complement integer
+/* 
+ * TMax - return maximum two's complement integer 
  *   Legal ops: ! ~ & ^ | + << >>
  *   Max ops: 4
  *   Rating: 1
  */
 int tmax(void) {
-    int a = 0xf;
-    a >> 31;
-    return  a;
+
+
+  return 2;
+
 }
-/*
- * fitsBits - return 1 if x can be represented as an
+/* 
+ * fitsBits - return 1 if x can be represented as an 
  *  n-bit, two's complement integer.
  *   1 <= n <= 32
  *   Examples: fitsBits(5,3) = 0, fitsBits(-4,3) = 1
@@ -164,20 +169,19 @@ int tmax(void) {
  *   Rating: 2
  */
 int fitsBits(int x, int n) {
-
-  return !(((~x & (x >> 31)) + (x & ~(x >> 31))) >> (n + ~0));
+  return 2;
 }
-/*
- * negate - return -x
+/* 
+ * negate - return -x 
  *   Example: negate(1) = -1.
  *   Legal ops: ! ~ & ^ | + << >>
  *   Max ops: 5
  *   Rating: 2
  */
 int negate(int x) {
-  return ~x + 0x01;
+  return 2;
 }
-/*
+/* 
  * addOK - Determine if can compute x+y without overflow
  *   Example: addOK(0x80000000,0x80000000) = 0,
  *            addOK(0x80000000,0x70000000) = 1, 
@@ -186,12 +190,7 @@ int negate(int x) {
  *   Rating: 3
  */
 int addOK(int x, int y) {
-  int shiftx = x >> 31;
-  int shifty = y >> 31;
-  int total = x+y;
-  int a = shiftx^shifty;
-  a = (a&0) | (~a & (shiftx^total));
-  return (a&0) | (~a & 1);
+  return 2;
 }
 /* 
  * reverseBytes - reverse the bytes of x
@@ -201,7 +200,7 @@ int addOK(int x, int y) {
  *   Rating: 3
  */
 int reverseBytes(int x) {
-  return ~x;
+  return 2;
 }
 /* 
  * logicalShift - shift x to the right by n, using a logical shift
@@ -212,7 +211,7 @@ int reverseBytes(int x) {
  *   Rating: 3 
  */
 int logicalShift(int x, int n) {
-  return (x>>n);
+  return 2;
 }
 /* 
  * conditional - same as x ? y : z 
@@ -264,7 +263,7 @@ int isPower2(int x) {
  *   Rating: 4 
  */
 int bang(int x) {
-  return ~x;
+  return 2;
 }
 /*
  * classLog2 - return floor(log base 2 of x), where x > 0
