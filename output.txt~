@@ -1,0 +1,58 @@
+Usage: ./btest [-v 0|1] [-hag] [-f <func name>] [-e <max errors>]
+  -e <n>    Limit number of errors to report for single function to n
+  -f <name> Check only the named function
+  -g        Print compact grading summary (implies -v 0 and -e 0)
+  -h        Print this message
+  -a        Omit check for valid team members
+  -r <n>    Give uniform weight of n for all problems
+  -v <n>    Set verbosity to level n
+               n=0: Only give final scores
+               n=1: Also report individual correctness scores (default)
+Team: maci4699
+Member 1:	Matthew Cirbo	maci4699
+Member 2:	Nick Isaacs	nisaacs
+
+Test isZero score: 1.00/1.00
+Test tmax() failed.
+  Gives 15[0xf].  Should be 2147483647[0x7fffffff]
+Test tmax score: 0.00/1.00
+Test fitsBits score: 2.00/2.00
+Test negate score: 2.00/2.00
+Test addOK(-2147483648[0x80000000],-3[0xfffffffd]) failed.
+  Gives 1[0x1].  Should be 0[0x0]
+... 110 total errors for function addOK
+Test addOK score: 0.00/3.00
+Test reverseBytes(-2147483648[0x80000000]) failed.
+  Gives 2147483647[0x7fffffff].  Should be 128[0x80]
+... 20 total errors for function reverseBytes
+Test reverseBytes score: 0.00/3.00
+Test logicalShift(-2147483648[0x80000000],1[0x1]) failed.
+  Gives -1073741824[0xc0000000].  Should be 1073741824[0x40000000]
+... 341 total errors for function logicalShift
+Test logicalShift score: 0.00/3.00
+Test conditional(-2147483648[0x80000000],-2147483648[0x80000000],-2147483648[0x80000000]) failed.
+  Gives 2[0x2].  Should be -2147483648[0x80000000]
+... 8000 total errors for function conditional
+Test conditional score: 0.00/3.00
+Test sm2tc(-2147483648[0x80000000]) failed.
+  Gives 2[0x2].  Should be 0[0x0]
+... 20 total errors for function sm2tc
+Test sm2tc score: 0.00/4.00
+Test bitParity(-2147483648[0x80000000]) failed.
+  Gives 2[0x2].  Should be 1[0x1]
+... 20 total errors for function bitParity
+Test bitParity score: 0.00/4.00
+Test isPower2(-2147483648[0x80000000]) failed.
+  Gives 2[0x2].  Should be 0[0x0]
+... 20 total errors for function isPower2
+Test isPower2 score: 0.00/4.00
+Test bang(-2147483648[0x80000000]) failed.
+  Gives 2147483647[0x7fffffff].  Should be 0[0x0]
+... 19 total errors for function bang
+Test bang score: 0.00/4.00
+Test classLog2(1[0x1]) failed.
+  Gives 2[0x2].  Should be 0[0x0]
+... 18 total errors for function classLog2
+Test classLog2 score: 0.00/4.00
+Overall correctness score: 5.00/38.00
+8569 errors encountered.
