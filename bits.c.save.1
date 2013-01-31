@@ -150,9 +150,7 @@ int isZero(int x) {
  *   Rating: 1
  */
 int tmax(void) {
-    int a = 0xf;
-    a >> 31;
-    return  a;
+  return ~(0x01 >> 31);
 }
 /*
  * fitsBits - return 1 if x can be represented as an
@@ -164,8 +162,10 @@ int tmax(void) {
  *   Rating: 2
  */
 int fitsBits(int x, int n) {
-
-  return !(((~x & (x >> 31)) + (x & ~(x >> 31))) >> (n + ~0));
+  int r = ~x & (x >> 31);
+  r = r + (x & ~(x >> 31));
+  r = r >> (n + ~0);
+  return !r;
 }
 /*
  * negate - return -x
@@ -187,11 +187,11 @@ int negate(int x) {
  */
 int addOK(int x, int y) {
   int total1 = x + y;
-  int totalx = x >> 31;
-  int totaly = y >> 31;
-  int total2 = total1 >> 31;
+  int maskx = x >> 31;
+  int masky = y >> 31;
+  int totalmask = total1 >> 31;
 
-  return !( ~(totalx ^ totaly) & (totalx ^ total2));
+  return !( ~(maskx ^ masky) & (maskx ^ totalmask));
 }
 /*
  * reverseBytes - reverse the bytes of x
@@ -201,20 +201,26 @@ int addOK(int x, int y) {
  *   Rating: 3
  */
 int reverseBytes(int x) {
-  return ~x;
+  int mask_base = 0xFF;
+  int fourth = x & mask_base;
+  int third = (x >> 8) & mask_base;
+  int second = (x >> 16) & mask_base;
+  int first = (x >> 24) & mask_base;
+  return (fourth << 24)|(third << 16)|(second << 8)|first;
 }
-/* 
+/*
  * logicalShift - shift x to the right by n, using a logical shift
  *   Can assume that 1 <= n <= 31
  *   Examples: logicalShift(0x87654321,4) = 0x08765432
  *   Legal ops: ~ & ^ | + << >>
  *   Max ops: 16
- *   Rating: 3 
+ *   Rating: 3
  */
-int logicalShift(int x, int n) {
-  return (x>>n);
+int logicalShift(int x, int n){
+  int mask = ~(~0 << n) << (32 +(~n + 1));
+  return ~mask & ( (x >> n) | mask);
 }
-/* 
+/*
  * conditional - same as x ? y : z 
  *   Example: conditional(2,4,5) = 4
  *   Legal ops: ! ~ & ^ | + << >>
@@ -264,7 +270,7 @@ int isPower2(int x) {
  *   Rating: 4 
  */
 int bang(int x) {
-  return ~x;
+  return ~((x&(~0x00))^(~x & ~0x00));
 }
 /*
  * classLog2 - return floor(log base 2 of x), where x > 0
