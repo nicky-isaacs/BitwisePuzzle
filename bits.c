@@ -1,6 +1,6 @@
-/*
- * CS:APP Data Lab
- *
+/* 
+ * CS:APP Data Lab 
+ * 
  * bits.c - Source file with your solutions to the Lab.
  *          This is the file you will hand in to your instructor.
  *
@@ -8,7 +8,7 @@
  * compiler. You can still use printf for debugging without including
  * <stdio.h>, although you might get a compiler warning. In general,
  * it's not good practice to ignore compiler warnings, but in this
- * case it's OK.
+ * case it's OK.  
  */
 
 #include "btest.h"
@@ -25,7 +25,7 @@ team_struct team =
       Your login ID if working as a one person team
       or, ID1+ID2 where ID1 is the login ID of the first team member
       and ID2 is the login ID of the second team member */
-    "maci4699",
+    "maci4699+niis0081", 
    /* Student name 1: Replace with the full name of first team member */
    "Matthew Cirbo",
    /* Login ID 1: Replace with the login ID of first team member */
@@ -33,9 +33,9 @@ team_struct team =
 
    /* The following should only be changed if there are two team members */
    /* Student name 2: Full name of the second team member */
-   "Nick Isaacs",
+   "Nicholas Isaacs",
    /* Login ID 2: Login ID of the second team member */
-   "nisaacs"
+   "niis0081"
 };
 
 #if 0
@@ -70,7 +70,7 @@ CODING RULES:
   2. Function arguments and local variables (no global variables).
   3. Unary integer operations ! ~
   4. Binary integer operations & ^ | + << >>
-
+    
   Some of the problems restrict the set of allowed operators even further.
   Each "Expr" may consist of multiple operators. You are not restricted to
   one operator per line.
@@ -125,15 +125,15 @@ NOTES:
 
 /*
  * STEP 3: Modify the following functions according the coding rules.
- *
+ * 
  *   IMPORTANT. TO AVOID GRADING SURPRISES:
  *   1. Use the dlc compiler to check that your solutions conform
  *      to the coding rules.
- *   2. Use the btest test harness to check that your solutions produce
+ *   2. Use the btest test harness to check that your solutions produce 
  *      the correct answers. Watch out for corner cases around Tmin and Tmax.
  */
 /*
- * isZero - returns 1 if x == 0, and 0 otherwise
+ * isZero - returns 1 if x == 0, and 0 otherwise 
  *   Examples: isZero(5) = 0, isZero(0) = 1
  *   Legal ops: ! ~ & ^ | + << >>
  *   Max ops: 2
@@ -143,17 +143,19 @@ int isZero(int x) {
 
   return !x;
 }
-/*
- * TMax - return maximum two's complement integer
+/* 
+ * TMax - return maximum two's complement integer 
  *   Legal ops: ! ~ & ^ | + << >>
  *   Max ops: 4
  *   Rating: 1
  */
 int tmax(void) {
-  return ~(0x01 >> 31);
+	
+  return ~(0x01<<0x1F);
+
 }
-/*
- * fitsBits - return 1 if x can be represented as an
+/* 
+ * fitsBits - return 1 if x can be represented as an 
  *  n-bit, two's complement integer.
  *   1 <= n <= 32
  *   Examples: fitsBits(5,3) = 0, fitsBits(-4,3) = 1
@@ -162,13 +164,11 @@ int tmax(void) {
  *   Rating: 2
  */
 int fitsBits(int x, int n) {
-  int r = ~x & (x >> 31);
-  r = r + (x & ~(x >> 31));
-  r = r >> (n + ~0);
-  return !r;
+	
+  return !(((~x & (x >> 0x1F)) + (x & ~(x >>0x1F))) >> (n + ~0));
 }
-/*
- * negate - return -x
+/* 
+ * negate - return -x 
  *   Example: negate(1) = -1.
  *   Legal ops: ! ~ & ^ | + << >>
  *   Max ops: 5
@@ -177,7 +177,7 @@ int fitsBits(int x, int n) {
 int negate(int x) {
   return ~x + 0x01;
 }
-/*
+/* 
  * addOK - Determine if can compute x+y without overflow
  *   Example: addOK(0x80000000,0x80000000) = 0,
  *            addOK(0x80000000,0x70000000) = 1, 
@@ -186,14 +186,9 @@ int negate(int x) {
  *   Rating: 3
  */
 int addOK(int x, int y) {
-  int total1 = x + y;
-  int maskx = x >> 31;
-  int masky = y >> 31;
-  int totalmask = total1 >> 31;
-
-  return !( ~(maskx ^ masky) & (maskx ^ totalmask));
+  return !( ~(x >> 0x1F ^ y >> 0x1F) & (y >> 0x1F ^ ((x + y)>>0x1F)));
 }
-/*
+/* 
  * reverseBytes - reverse the bytes of x
  *   Example: reverseBytes(0x01020304) = 0x04030201
  *   Legal ops: ! ~ & ^ | + << >>
@@ -201,26 +196,30 @@ int addOK(int x, int y) {
  *   Rating: 3
  */
 int reverseBytes(int x) {
-  int mask_base = 0xFF;
-  int fourth = x & mask_base;
-  int third = (x >> 8) & mask_base;
-  int second = (x >> 16) & mask_base;
-  int first = (x >> 24) & mask_base;
-  return (fourth << 24)|(third << 16)|(second << 8)|first;
+
+  int first = x&0xFF;
+  int second = (x>>8)&0xFF;
+  int third = (x>>16)&0xFF;
+  int last = (x>>24)&0xFF;
+  
+  return ((first<<24)|(second<<16)|(third<<8)|last);
+
 }
-/*
+/* 
  * logicalShift - shift x to the right by n, using a logical shift
  *   Can assume that 1 <= n <= 31
  *   Examples: logicalShift(0x87654321,4) = 0x08765432
  *   Legal ops: ~ & ^ | + << >>
  *   Max ops: 16
- *   Rating: 3
+ *   Rating: 3 
  */
-int logicalShift(int x, int n){
+int logicalShift(int x, int n) {
+	
   int mask = ~(~0 << n) << (32 +(~n + 1));
-  return ~mask & ( (x >> n) | mask);
+  return  ~mask & ( (x >> n) | mask);
+
 }
-/*
+/* 
  * conditional - same as x ? y : z 
  *   Example: conditional(2,4,5) = 4
  *   Legal ops: ! ~ & ^ | + << >>
@@ -228,7 +227,8 @@ int logicalShift(int x, int n){
  *   Rating: 3
  */
 int conditional(int x, int y, int z) {
-  return 2;
+  x = ((!x)<<31)>>31;
+  return (~x&y)+(x&z);
 }
 /* 
  * sm2tc - Convert from sign-magnitude to two's complement
@@ -239,7 +239,17 @@ int conditional(int x, int y, int z) {
  *   Rating: 4
  */
 int sm2tc(int x) {
-  return 2;
+  int mask = 1 << 31;
+  int neg = (mask & x) >> 31;
+  int pos = ~neg;
+  int sign = mask & x;
+
+  pos = pos & x;
+  neg = neg & x;
+
+  neg = ~(neg + ~0);
+
+  return (neg + pos + sign);
 }
 /*
  * bitParity - returns 1 if x contains an odd number of 0's
@@ -249,7 +259,12 @@ int sm2tc(int x) {
  *   Rating: 4
  */
 int bitParity(int x) {
-  return 2;
+  x = ( x >> 0x10 ) ^ x;
+  x = ( x >> 0x08 ) ^ x;
+  x = ( x >> 0x04 ) ^ x;
+  x = ( x >> 0x02 ) ^ x;
+  x = ( x >> 0x01 ) ^ x;
+  return (x & 0x01);
 }
 /*
  * isPower2 - returns 1 if x is a power of 2, and 0 otherwise
@@ -260,7 +275,8 @@ int bitParity(int x) {
  *   Rating: 4
  */
 int isPower2(int x) {
-  return 2;
+  int mask = ~0;
+  return (!(mask ^ (~x + 1)));
 }
 /* 
  * bang - Compute !x without using !
@@ -270,7 +286,13 @@ int isPower2(int x) {
  *   Rating: 4 
  */
 int bang(int x) {
-  return ~((x&(~0x00))^(~x & ~0x00)) || x;
+  x = ( x >> 0x10 ) | x;
+  x = ( x >> 0x08 ) | x;
+  x = ( x >> 0x04 ) | x;
+  x = ( x >> 0x02 ) | x;
+  x = ( x >> 0x01 ) | x;
+  
+  return ~x & 1;
 }
 /*
  * classLog2 - return floor(log base 2 of x), where x > 0
@@ -280,7 +302,38 @@ int bang(int x) {
  *   Rating: 4
  */
 int classLog2(int x) {
-  i = i - ((i >> 1) & 0x55555555);
-  i = (i & 0x33333333) + ((i >> 2) & 0x33333333);
-  return (((i + (i >> 4)) & 0x0F0F0F0F) * 0x01010101) >> 24;
+	
+        // find out if the non-zero bit is in the first two words
+        int A = !(!(x >> 16));  // should be 1 if the n >= 16
+        int count = 0;
+        int x_copy = x;
+       
+        // if A is 1 add 16 to count
+        count = count + (A<<4);
+       
+        // if A is 1 return x >> 15, else return x. This is a
+        // modified version of my conditional code
+        x_copy = (((~A + 1) & (x >> 16)) + (~(~A+1) & x));
+       
+        // repeat the process but rather than operating on the second half,
+        // we can now only worry about the second quarter of the first half.
+        A = !(!(x_copy >> 8));
+        count = count + (A<<3);
+        x_copy = (((~A + 1) & (x_copy >> 8)) + (~(~A+1) & x_copy));
+       
+        // continue this process until we have covered all bits.
+        A = !(!(x_copy >> 4));
+        count = count + (A<<2);
+        x_copy = (((~A + 1) & (x_copy >> 4)) + (~(~A+1) & x_copy));
+       
+        A = !(!(x_copy >> 2));
+        count = count + (A<<1);
+        x_copy = (((~A + 1) & (x_copy >> 2)) + (~(~A+1) & x_copy));
+       
+        A = !(!(x_copy >> 1));
+        count = count + A;
+ 
+        return count;
+
+
 }
